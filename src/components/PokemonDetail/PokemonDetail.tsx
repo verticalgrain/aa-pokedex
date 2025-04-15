@@ -3,7 +3,8 @@ import { useParams, Link } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import { getPokemonDetail } from '../../api/pokemonApi';
 import { PokemonDetail as PokemonDetailType } from '../../models/types';
-import { formatPokemonName, getStatBarWidth } from '../../utils/utils'
+import PokemonDetailStats from '../PokemonDetailStats/PokemonDetailStats';
+import { formatPokemonName } from '../../utils/utils'
 import styles from './PokemonDetail.module.scss';
 
 export default function PokemonDetail() {
@@ -11,10 +12,6 @@ export default function PokemonDetail() {
   const [pokemon, setPokemon] = useState<PokemonDetailType | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    console.log(pokemon)
-  }, [pokemon])
 
   useEffect(() => {
     const fetchPokemonData = async () => {
@@ -44,10 +41,6 @@ export default function PokemonDetail() {
   if (!pokemon) {
     return <div className={styles.error}>Pokémon not found</div>;
   }
-
-  const getStatValue = (statName: string): number => {
-    return pokemon.stats.find(stat => stat.stat.name === statName)?.base_stat || 0;
-  };
 
   const formattedName = formatPokemonName(pokemon.name);
 
@@ -106,70 +99,7 @@ export default function PokemonDetail() {
             </div>
           </div>
 
-          <div className={styles.statsContainer}>
-            <div className={styles.stats}>
-              <div className={styles.stat}>
-                <span className={styles.statLabel}>HP:</span>
-                <div className={styles.statBarContainer}>
-                  <div 
-                    className={styles.statBar} 
-                    style={{ width: getStatBarWidth(getStatValue('hp')) }}
-                  />
-                </div>
-                <span className={styles.statValue}>{getStatValue('hp')}</span>
-              </div>
-              <div className={styles.stat}>
-                <span className={styles.statLabel}>Attack:</span>
-                <div className={styles.statBarContainer}>
-                  <div 
-                    className={styles.statBar} 
-                    style={{ width: getStatBarWidth(getStatValue('attack')) }}
-                  />
-                </div>
-                <span className={styles.statValue}>{getStatValue('attack')}</span>
-              </div>
-              <div className={styles.stat}>
-                <span className={styles.statLabel}>Defense:</span>
-                <div className={styles.statBarContainer}>
-                  <div 
-                    className={styles.statBar} 
-                    style={{ width: getStatBarWidth(getStatValue('defense')) }}
-                  />
-                </div>
-                <span className={styles.statValue}>{getStatValue('defense')}</span>
-              </div>
-              <div className={styles.stat}>
-                <span className={styles.statLabel}>Sp. Attack:</span>
-                <div className={styles.statBarContainer}>
-                  <div 
-                    className={styles.statBar} 
-                    style={{ width: getStatBarWidth(getStatValue('special-attack')) }}
-                  />
-                </div>
-                <span className={styles.statValue}>{getStatValue('special-attack')}</span>
-              </div>
-              <div className={styles.stat}>
-                <span className={styles.statLabel}>Sp. Defense:</span>
-                <div className={styles.statBarContainer}>
-                  <div 
-                    className={styles.statBar} 
-                    style={{ width: getStatBarWidth(getStatValue('special-defense')) }}
-                  />
-                </div>
-                <span className={styles.statValue}>{getStatValue('special-defense')}</span>
-              </div>
-              <div className={styles.stat}>
-                <span className={styles.statLabel}>Speed:</span>
-                <div className={styles.statBarContainer}>
-                  <div 
-                    className={styles.statBar} 
-                    style={{ width: getStatBarWidth(getStatValue('speed')) }}
-                  />
-                </div>
-                <span className={styles.statValue}>{getStatValue('speed')}</span>
-              </div>
-            </div>
-          </div>
+          <PokemonDetailStats pokemon={pokemon} />
 
           <div className={styles.abilities}>
             <h3 className={styles.abilitiesLabel}>Abilities:</h3>
