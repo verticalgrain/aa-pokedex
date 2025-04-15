@@ -2,7 +2,12 @@
 
 Thanks Agency Analytics for the fun challenge! I've enjoyed putting this Pokedex together and my eight year old daughter has been having fun using it on her tablet!
 
-## Running app:
+My Pokedex can be found here: 
+
+[https://jamiespokedex.netlify.app/](https://jamiespokedex.netlify.app/)
+
+
+## Running the app:
 
 ### With NPM:
 - `npm install`
