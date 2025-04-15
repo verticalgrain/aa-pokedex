@@ -1,6 +1,6 @@
 import { usePokemonContext } from '../../context/PokemonContext';
 import Pagination from '../Pagination/Pagination';
-import PokemonCard from '../PokemonCard/PokemonCard';
+import DraggablePokemonCard from '../DraggablePokemonCard/DraggablePokemonCard';
 import PokemonCardSkeleton from '../PokemonCardSkeleton/PokemonCardSkeleton';
 import FilterOptions from '../FilterOptions/FilterOptions';
 import styles from './PokemonList.module.scss';
@@ -32,11 +32,10 @@ export default function PokemonList() {
 
   return (
     <div className={styles.container}>
-
       {searchQuery && (
         <>
           <FilterOptions />
-            <div className={styles.searchResults}>
+          <div className={styles.searchResults}>
             Showing results for: <span className={styles.searchTerm}>{searchQuery}</span>
             {pokemonList.length === 0 && <span> (No matches found)</span>}
           </div>
@@ -47,7 +46,7 @@ export default function PokemonList() {
         <>
           <div className={styles.grid}>
             {pokemonList.map(pokemon => (
-              <PokemonCard key={pokemon.id} pokemon={pokemon} />
+              <DraggablePokemonCard key={pokemon.id} pokemon={pokemon} />
             ))}
           </div>
 

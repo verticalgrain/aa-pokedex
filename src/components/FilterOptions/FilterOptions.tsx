@@ -10,13 +10,11 @@ export default function FilterOptions() {
   const [activeDirection, setActiveDirection] = useState<SortDirection>(sortOption?.direction || 'asc');
 
   const handleSort = (field: SortField) => {
-    // If clicking the same field, toggle direction
     if (activeField === field) {
       const newDirection: SortDirection = activeDirection === 'asc' ? 'desc' : 'asc';
       setActiveDirection(newDirection);
       sortPokemon({ field, direction: newDirection });
     } else {
-      // If clicking a new field, set it with ascending direction
       setActiveField(field);
       setActiveDirection('asc');
       sortPokemon({ field, direction: 'asc' });
@@ -29,35 +27,33 @@ export default function FilterOptions() {
     resetFilters();
   };
 
+  const renderSortButton = (field: SortField, label: string) => {
+    const isActive = activeField === field;
+    const direction = isActive ? activeDirection : 'asc';
+    const arrow = isActive ? (direction === 'asc' ? '↓' : '↑') : '';
+    const ariaLabel = `Sort by ${label} ${isActive ? (direction === 'asc' ? 'ascending' : 'descending') : ''}`;
+
+    return (
+      <button
+        className={clsx(styles.filterButton, { [styles.active]: isActive })}
+        onClick={() => handleSort(field)}
+        aria-pressed={isActive}
+        aria-label={ariaLabel}
+      >
+        {label} {arrow}
+      </button>
+    );
+  };
+
   return (
     <div className={styles.filterContainer}>
-      <div className={styles.filterOptions}>
-        <span className={styles.filterLabel}>Sort by:</span>
-        <button 
-          className={clsx(styles.filterButton, { [styles.active]: activeField === 'name' })}
-          onClick={() => handleSort('name')}
-        >
-          Name {activeField === 'name' && (activeDirection === 'asc' ? '↓' : '↑')}
-        </button>
-        <button 
-          className={clsx(styles.filterButton, { [styles.active]: activeField === 'hp' })}
-          onClick={() => handleSort('hp')}
-        >
-          HP {activeField === 'hp' && (activeDirection === 'asc' ? '↓' : '↑')}
-        </button>
-        <button 
-          className={clsx(styles.filterButton, { [styles.active]: activeField === 'attack' })}
-          onClick={() => handleSort('attack')}
-        >
-          Attack {activeField === 'attack' && (activeDirection === 'asc' ? '↓' : '↑')}
-        </button>
-        <button 
-          className={clsx(styles.filterButton, { [styles.active]: activeField === 'speed' })}
-          onClick={() => handleSort('speed')}
-        >
-          Speed {activeField === 'speed' && (activeDirection === 'asc' ? '↓' : '↑')}
-        </button>
-      </div>
+      <fieldset className={styles.filterOptions} aria-label="Sort Pokémon">
+        <div className={styles.filterLabel}>Sort by:</div>
+        {renderSortButton('name', 'Name')}
+        {renderSortButton('hp', 'HP')}
+        {renderSortButton('attack', 'Attack')}
+        {renderSortButton('speed', 'Speed')}
+      </fieldset>
       <button className={styles.resetButton} onClick={handleReset}>
         Reset
       </button>

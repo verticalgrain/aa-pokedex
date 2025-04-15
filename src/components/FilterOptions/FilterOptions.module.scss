@@ -1,4 +1,4 @@
-$breakpoint-md: 768px;
+@import '../../styles/variables';
 
 .filterContainer {
   display: flex;
@@ -17,6 +17,8 @@ $breakpoint-md: 768px;
   display: flex;
   align-items: center;
   gap: 10px;
+  border: none;
+  font-size: 0.875rem;
 }
 
 .filterLabel {

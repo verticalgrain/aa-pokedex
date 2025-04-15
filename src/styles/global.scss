@@ -32,12 +32,14 @@ a {
   --color-background: #ebedef;
   --color-border: #d6dbdf;
   --color-active: #0072ed;
-
+  --color-alert: #ff6b6b;
+  
   --border-radius-small: 4px;
   --border-radius-medium: 6px;
 
+  --sidebar-width: 260px;
   --container-width: 1100px;
-  --min-width-breakpoint: 867px;
+  --min-width-breakpoint: 768px;
 }
 
 /* Utility Classes */

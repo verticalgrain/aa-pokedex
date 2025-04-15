@@ -51,3 +51,9 @@ export interface SortOption {
   field: SortField;
   direction: SortDirection;
 }
+
+export interface FavouritePokemon {
+  id: number;
+  name: string;
+  image: string;
+}

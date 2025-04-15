@@ -13,6 +13,10 @@ export default function PokemonDetail() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    console.log(pokemon)
+  }, [pokemon])
+
+  useEffect(() => {
     const fetchPokemonData = async () => {
       try {
         setIsLoading(true);
